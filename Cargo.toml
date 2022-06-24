@@ -1,0 +1,15 @@
+[package]
+name = "rust-based-pastebin"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = { version = "0.5.9" }
+tokio = { version = "1.19.2", features = ["rt-multi-thread", "macros"] }
+diesel = { version = "1.4.8", features = ["sqlite", "postgres"]}
+tower-http = { version = "0.3.4", features = ["trace"] }
+tracing = { version = "0.1.35", features = ["max_level_trace", "release_max_level_info"] }
+tracing-subscriber = { version = "0.3.11", features = ["env-filter"] }
+serde = { version = "1.0.137", features = ["derive"] }
