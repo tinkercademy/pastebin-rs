@@ -6,6 +6,7 @@ use axum::http::StatusCode;
 use axum::response::Html;
 use tracing::{debug};
 use serde::Serialize;
+use sqlx::{Connection, SqliteConnection};
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::{
     layer::{SubscriberExt},
@@ -17,6 +18,7 @@ use tracing_subscriber::{
 struct Resp {
     message: String
 }
+
 
 #[tokio::main]
 async fn main() {
@@ -53,11 +55,22 @@ async fn not_found() -> impl IntoResponse {
     )
 }
 
+
 async fn index() -> impl IntoResponse {
     Html("<h1>API Base</h1>")
 }
+
 async fn create_paste(payload: String) -> impl IntoResponse {
+
     debug!("{}", payload);
+
+    let mut conn = SqliteConnection::connect("sqlite://test.db").await.unwrap();
+    sqlx::query("INSERT INTO pastes (content) VALUES (?)")
+        .bind(&payload)
+        .execute(&mut conn)
+        .await
+        .unwrap();
+
     (StatusCode::OK, Json(Resp{
         message: format!("Your paste of {}B was created", payload.len())
     }))
