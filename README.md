@@ -10,7 +10,8 @@ Possible improvements:
 - [ ] Rate limiting
 - [ ] Automatically deleting old pastes
 
-License: AGPL 
+## Licensing
+This is proudly LIBRE software. Please see our LICENSE file.
 
 ## API Endpoints
 
